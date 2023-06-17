@@ -65,11 +65,11 @@ app.prepare().then(() => {
         return handle(req, res);
     });
 
-    server.listen(3000, (err) => {
-        if (err) {
-            console.error('Error starting server:', err);
-        } else {
-            console.log('> Ready on Vercel');
-        }
-    });
+
 });
+module.exports = {
+    path: '/api',
+    handler: server,
+};
+
+// export default index;

@@ -67,6 +67,7 @@ app.prepare().then(() => {
 
 
 });
-module.exports = server;
+// module.exports = server;
+export default server;
 
 // export default index;

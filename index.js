@@ -6,6 +6,9 @@ const multer = require('multer');
 // const { createWorker } = require('tesseract.js');
 const bodyParser = require('body-parser');
 
+const serverless = require('serverless-http');
+
+
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();

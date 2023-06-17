@@ -3,7 +3,7 @@ const express = require('express');
 const next = require('next');
 const axios = require('axios');
 const multer = require('multer');
-const { createWorker } = require('tesseract.js');
+// const { createWorker } = require('tesseract.js');
 const bodyParser = require('body-parser');
 
 const dev = process.env.NODE_ENV !== 'production';
@@ -66,8 +66,19 @@ app.prepare().then(() => {
     });
 
 
+
+    const port = process.env.PORT || 3000;
+    const serverInstance = server.listen(port, (err) => {
+        if (err) {
+            console.error('Error starting server:', err);
+        } else {
+            console.log(`> Ready on http://localhost:${port}`);
+        }
+    });
+
+    module.exports = serverInstance;
 });
+
 // module.exports = server;
-export default server;
 
 // export default index;

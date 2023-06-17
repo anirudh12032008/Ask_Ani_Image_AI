@@ -76,7 +76,12 @@ app.prepare().then(() => {
         }
     });
 
-    module.exports = serverInstance;
+    const serverlessHandler = serverless(server);
+
+    module.exports = {
+        server,
+        serverlessHandler,
+    };
 });
 
 // module.exports = server;

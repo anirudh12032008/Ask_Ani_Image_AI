@@ -12,6 +12,7 @@ const serverless = require('serverless-http');
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
+const gptHandler = require('./pages/api/gpt');
 
 const server = express();
 
@@ -22,6 +23,7 @@ server.use(bodyParser.urlencoded({ extended: true }));
 const Tesseract = require('tesseract.js');
 
 const upload = multer().single('image');
+server.post('/api/gpt', gptHandler);
 
 server.post('/api/ocr', upload, async (req, res) => {
     try {
@@ -38,30 +40,30 @@ server.post('/api/ocr', upload, async (req, res) => {
     }
 });
 
-server.post('/api/gpt', async (req, res) => {
-    try {
-        const { prompt, model } = req.body;
-        console.log(prompt);
-        const response = await axios.post(
-            `https://api.openai.com/v1/engines/${model}/completions`,
-            {
-                prompt: prompt,
-                max_tokens: 1000,
-            },
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
-                },
-            }
-        );
+// server.post('/api/gpt', async (req, res) => {
+//     try {
+//         const { prompt, model } = req.body;
+//         console.log(prompt);
+//         const response = await axios.post(
+//             `https://api.openai.com/v1/engines/${model}/completions`,
+//             {
+//                 prompt: prompt,
+//                 max_tokens: 1000,
+//             },
+//             {
+//                 headers: {
+//                     'Content-Type': 'application/json',
+//                     'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
+//                 },
+//             }
+//         );
 
-        res.status(200).json({ text: response.data.choices[0].text });
-    } catch (error) {
-        console.error('Text generation error:', error);
-        res.status(500).json({ error: 'Text generation error' });
-    }
-});
+//         res.status(200).json({ text: response.data.choices[0].text });
+//     } catch (error) {
+//         console.error('Text generation error:', error);
+//         res.status(500).json({ error: 'Text generation error' });
+//     }
+// });
 
 app.prepare().then(() => {
     server.all('*', (req, res) => {

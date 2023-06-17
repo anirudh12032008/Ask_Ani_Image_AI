@@ -67,9 +67,6 @@ app.prepare().then(() => {
 
 
 });
-module.exports = {
-    path: '/api',
-    handler: server,
-};
+module.exports = server;
 
 // export default index;

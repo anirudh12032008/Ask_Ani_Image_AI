@@ -13,7 +13,7 @@ const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 const gptHandler = require('./pages/api/gpt');
-const ocrHandler = require('./api/ocr');
+const ocrHandler = require('./pages/api/ocr');
 
 const server = express();
 
